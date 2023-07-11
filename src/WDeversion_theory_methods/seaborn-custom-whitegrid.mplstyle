@@ -1,0 +1,54 @@
+# .15 = dark_grey
+# .8 = light_grey
+
+### Figure
+figure.facecolor: white
+
+### Fonts & Text
+text.color: .15
+font.size: 15
+font.family: sans-serif
+font.sans-serif: Myriad Pro, Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
+
+
+### Axes
+axes.labelcolor: .15
+axes.labelsize: 15
+
+axes.grid: False
+axes.axisbelow: True
+axes.facecolor: white
+axes.edgecolor: .15
+axes.linewidth: 1
+
+axes.spines.right: False
+axes.spines.top: False
+
+### Legend
+legend.frameon: False
+legend.numpoints: 1
+legend.scatterpoints: 1
+
+### Lines
+lines.solid_capstyle: butt 
+
+### Ticks
+xtick.direction: out
+ytick.direction: out
+xtick.color: .15
+ytick.color: .15
+xtick.major.size: 3
+ytick.major.size: 3
+xtick.minor.size: 2
+ytick.minor.size: 2
+xtick.labelcolor: .15
+ytick.labelcolor: .15
+
+### Grid
+grid.linestyle: -
+grid.color: .8
+
+### Saving
+savefig.dpi: 600
+savefig.transparent: True
+
