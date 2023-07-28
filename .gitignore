@@ -2,3 +2,4 @@
 *.egg-info
 .DS_STORE
 WD_env
+*raw_data*
