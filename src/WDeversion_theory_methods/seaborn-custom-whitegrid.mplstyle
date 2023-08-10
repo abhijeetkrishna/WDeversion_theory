@@ -5,16 +5,18 @@
 figure.facecolor: white
 
 ### Fonts & Text
-text.color: .15
-font.size: 15
+#text.color: .15
+font.size: 16
 font.family: sans-serif
 font.sans-serif: Myriad Pro, Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
 
+### equations
+mathtext.fontset : cm
 
 ### Axes
 axes.labelcolor: .15
 axes.labelsize: 15
-
+axes.titlesize: 16
 axes.grid: False
 axes.axisbelow: True
 axes.facecolor: white
@@ -30,9 +32,11 @@ legend.numpoints: 1
 legend.scatterpoints: 1
 
 ### Lines
-lines.solid_capstyle: butt 
+lines.solid_capstyle: butt
 
 ### Ticks
+xtick.labelsize: 15
+ytick.labelsize: 15
 xtick.direction: out
 ytick.direction: out
 xtick.color: .15
@@ -51,4 +55,4 @@ grid.color: .8
 ### Saving
 savefig.dpi: 600
 savefig.transparent: True
-
+                          
