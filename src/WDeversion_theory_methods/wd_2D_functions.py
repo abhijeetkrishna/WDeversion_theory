@@ -165,8 +165,9 @@ def import_raw_crosssection_points(files = [],plot = False, crosssection = None,
         newnames = [i.replace('nubG4myoVI','ecadGFPnbG4myoVI') for i in df_all['disc']]
         df_all['disc'] = newnames
 
-        with open(scale_file, "rb") as f:
-            scalesDF = pickle.load(f)
+        #with open(scale_file, "rb") as f:
+        #    scalesDF = pickle.load(f)
+        scalesDF = pd.read_pickle(scale_file)
         df_all = pd.merge(df_all, scalesDF)
         df_all['pixel to micron'] = [float(i) for i in df_all['pixel to micron']]
 
