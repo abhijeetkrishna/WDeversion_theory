@@ -29,7 +29,7 @@ We analyze the growth patterns in the *Drosophila* wing disc during its transfor
 ## Getting Started <a name = "getting_started"></a>
 
 Clone the repository to get a copy of the project up and running on your local machine.
-`git clone git@git.mpi-cbg.de:modeslab/WingDiscEversion_theory.git`
+`git clone git@git.mpi-cbg.de:krishna/wdeversion_theory.git`
 
 ## Prerequisites
 You need to install [OpenFPM](http://openfpm.mpi-cbg.de/) to run the simulations.
@@ -40,18 +40,19 @@ Other packages used are mentioned in the [requirements.txt](requirements.txt) fi
 
 ## Project Members
 
-- Jana Fuhrmann
+- Dr. Jana Fuhrmann
+
+- Dr. Joris Paijmans
+- Dr. Charlie Duclut
+- Dr. Marko Popovic
+- Prof. Suzanne Eaton
+- Prof. Frank Julicher
+- Dr. Natalie Dye
+- Dr. Carl Modes
 - Abhijeet Krishna
-- Joris Paijmans
-- Charlie Duclut
-- Marko Popovic
-- Suzanne Eaton
-- Frank Julicher
-- Carl Modes
-- Natalie Dye
 
 ## Acknowledgements <a name = "acknowledgement"></a>
-- Abhinav Singh, Pietro Incardona, Ivo Sbalzarini and other members of the [OpenFPM](http://openfpm.mpi-cbg.de/) team (@MPI-CBG, Dresden)
+- Abhinav Singh, Dr. Pietro Incardona, Prof. Ivo Sbalzarini and other members of the [OpenFPM](http://openfpm.mpi-cbg.de/) team (@MPI-CBG, Dresden)
 - IT Department (@MPI-CBG, Dresden)
 - Scientific Computation Department (@MPI-CBG, Dresden)
 - Developers of packages mentioned in [requirements.txt](Environment/requirements.txt)
