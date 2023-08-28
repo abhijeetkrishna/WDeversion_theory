@@ -2,5 +2,5 @@
 *.egg-info
 .DS_STORE
 WD_env
-*raw_data*
-*analyzed_output*
+*data*
+*analysis*
