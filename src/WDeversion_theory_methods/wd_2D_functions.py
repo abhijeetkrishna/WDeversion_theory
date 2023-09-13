@@ -194,32 +194,36 @@ def import_raw_crosssection_points(files = [],plot = False, crosssection = None,
 
             curve = df_all[df_all['disc'] == disc_name].drop_duplicates()
 
+
             ########
-            # Make sure that Dorsal starts where ventral begins
+            # Make sure that dorsal starts where ventral ends -- ensures correct continuity
             if crosssection == 'Across_DV':
 
                 curve_dorsal = curve[curve['region'] == 'dorsal'].drop_duplicates()
                 curve_ventral = curve[curve['region'] == 'ventral'].drop_duplicates()
 
-                #Checking if the orientation of the dorsal and ventral curves are both anticlockwise
+                #dist1 - Distance between end point of ventral and start point of dorsal
                 dist1 = (curve_ventral['x'].iloc[len(curve_ventral) - 1] - curve_dorsal['x'].iloc[0])**2 + (curve_ventral['y'].iloc[len(curve_ventral) - 1] - curve_dorsal['y'].iloc[0])**2
+                #dist2 - Distance between end point of ventral and end point of dorsal
                 dist2 = (curve_ventral['x'].iloc[len(curve_ventral) - 1] - curve_dorsal['x'].iloc[len(curve_dorsal) - 1])**2 + (curve_ventral['y'].iloc[len(curve_ventral) - 1] - curve_dorsal['y'].iloc[len(curve_dorsal) - 1])**2
-
+                #for correct continuity, dist1 < dist2. If that is not the case then revers order of dorsal points
                 if dist1>dist2:
-                    #reverse the order of points based on which endpoint of dorsal is closer to the endpoint of ventral
                     curve_dorsal = curve_dorsal.reindex(index=curve_dorsal.index[::-1])
 
                 curve = pd.concat( [curve_ventral, curve_dorsal], ignore_index = True)
-                curve = curve.reset_index(drop = True)
+            
+            #later we decided that dorsal will come first and then ventral, so inverting the curve
+            curve = curve.reindex(index=curve.index[::-1]) 
+            curve = curve.reset_index(drop = True)
 
             ###########
-            # Determine left and right - determine counterclockwise direction of curve
+            # Determine left and right - determine clockwise direction of curve
             ##########
 
             #select the a point in the middle -> 
             # get the vector from one end to this point and this point to the other end ->
             # Take the cross product of these two vectors
-            # If cross product faces in positive z direction then everything is fine 
+            # If cross product faces in negative z direction then curve is along clockwise direction
             # Else reverse the order of points
 
             init_point = np.array([curve.loc[ curve.index[0], 'x'], curve.loc[ curve.index[0], 'y']])
@@ -231,7 +235,7 @@ def import_raw_crosssection_points(files = [],plot = False, crosssection = None,
 
             cross_z= np.cross(init_mid_vector, mid_end_vector)
 
-            if cross_z < 0:
+            if cross_z > 0:
                 curve['y'] = -1 * curve['y']
                 #filcurve = curve.reindex(index=curve.index[::-1])
             
@@ -275,13 +279,13 @@ def import_raw_crosssection_points(files = [],plot = False, crosssection = None,
 
             if crosssection == 'Along_DV':
                 curve['region'] = ''
-                curve.loc[curve['arclength'] <= length/2, 'region'] = 'ventral'
-                curve.loc[curve['arclength'] > length/2, 'region'] = 'dorsal'
+                curve.loc[curve['arclength'] <= length/2, 'region'] = 'dorsal'
+                curve.loc[curve['arclength'] > length/2, 'region'] = 'ventral'
 
             curve_dorsal = curve[curve['region'] == 'dorsal']
             curve_ventral = curve[curve['region'] == 'ventral']
             #arclength of the midpoint is the average of the last point of curve_ventral and the first point of curve_dorsal
-            arclength_DV =  (curve_ventral.iloc[-1]['arclength'] + curve_dorsal.iloc[0]['arclength'])/2
+            arclength_DV =  (curve_dorsal.iloc[-1]['arclength'] + curve_ventral.iloc[0]['arclength'])/2
             curve['arclength_offset'] = curve['arclength'] - arclength_DV
             allcurves = pd.concat([allcurves, curve], ignore_index = True)
 
@@ -301,10 +305,10 @@ def import_raw_crosssection_points(files = [],plot = False, crosssection = None,
                 axs[1].set_ylabel('y(s)', fontsize = 20)
                 #axs[2] = fig.gca()
                 #axs[2].plot(curve['x'], curve['y'], marker = 'o', label = 'rotated')
-                axs[2].scatter(curve_ventral['x'], curve_ventral['y'], label = 'pre-mid', c = 'red')
-                axs[2].scatter(curve_dorsal['x'], curve_dorsal['y'], label = 'post-mid', c = 'blue')
-                axs[2].plot([(curve_ventral.iloc[-1]['x'] + curve_dorsal.iloc[0]['x'])/2,np.mean(curve['x'])],[(curve_ventral.iloc[-1]['y'] + curve_dorsal.iloc[0]['y'])/2,np.mean(curve['y'])],color = 'gray')
-                axs[2].scatter([(curve_ventral.iloc[-1]['x'] + curve_dorsal.iloc[0]['x'])/2,np.mean(curve['x'])],[(curve_ventral.iloc[-1]['y'] + curve_dorsal.iloc[0]['y'])/2,np.mean(curve['y'])],color = 'black')
+                axs[2].scatter(curve_ventral['x'], curve_ventral['y'], label = 'post-mid', c = 'red')
+                axs[2].scatter(curve_dorsal['x'], curve_dorsal['y'], label = 'pre-mid', c = 'blue')
+                axs[2].plot([(curve_dorsal.iloc[-1]['x'] + curve_ventral.iloc[0]['x'])/2,np.mean(curve['x'])],[(curve_dorsal.iloc[-1]['y'] + curve_ventral.iloc[0]['y'])/2,np.mean(curve['y'])],color = 'gray')
+                axs[2].scatter([(curve_dorsal.iloc[-1]['x'] + curve_ventral.iloc[0]['x'])/2,np.mean(curve['x'])],[(curve_dorsal.iloc[-1]['y'] + curve_ventral.iloc[0]['y'])/2,np.mean(curve['y'])],color = 'black')
                 axs[2].legend()
                 #axs[2].scatter(end_x, end_y)
                 axs[2].set(title = disc_name)
@@ -361,7 +365,7 @@ def align_curves(allcurves,
                 curve = curve.reset_index(drop = True)
 
                 #setting origin of curve - translation
-                [origin_x, origin_y] = [(curve_ventral.iloc[-1]['x'] + curve_dorsal.iloc[0]['x'])/2, (curve_ventral.iloc[-1]['y']  + curve_dorsal.iloc[0]['y'])/2]
+                [origin_x, origin_y] = [(curve_dorsal.iloc[-1]['x'] + curve_ventral.iloc[0]['x'])/2, (curve_dorsal.iloc[-1]['y']  + curve_ventral.iloc[0]['y'])/2]
                 curve['x'] = curve['x'] - origin_x
                 curve['y'] = curve['y'] - origin_y
 
@@ -430,7 +434,7 @@ def get_interpolated_curve_from_points(curve, disc_name = 'curve', arclengths = 
     x_2 = splev(arclengths, spl_x, der = 2)
     y_1 = splev(arclengths, spl_y, der = 1)
     y_2 = splev(arclengths, spl_y, der = 2)
-    curvatures = (y_2*x_1 - x_2*y_1)/(x_1**2 + y_1**2)**(3/2)
+    curvatures = - (y_2*x_1 - x_2*y_1)/(x_1**2 + y_1**2)**(3/2) #negative sign added here because our curve is clockwise oriented
 
     df = pd.DataFrame({
         'disc':[disc_name]*len(arclengths),
