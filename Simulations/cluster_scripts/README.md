@@ -12,4 +12,6 @@ After this, the OpenFPM simulation is run using the [C++ script](main.cpp).
 
 After running the simulation, the bash file runs python scripts [postprocess.py](postprocess.py) and [residual_calculation.py](residual_calculation.py) which are used to measure the output shape and calculate the residual strains respectively.
 
-After all the simulations for different parameter combinations have been run, the bash script [sweep_analysis.sh](sweep_analysis.sh) runs the python script [sweep_analysis.py](sweep_analysis.py) which averages the outputs by combining simulations for different random seeds and parameter combinations. The csv files that are created by this script are used to plot the results in the notebook [readModelResults.ipynb](../notebooks/readModelResults.ipynb).
+After all the simulations for different parameter combinations have been run, the bash script [sweep_analysis.sh](sweep_analysis.sh) runs the python script [sweep_analysis.py](sweep_analysis.py) which averages the outputs by combining simulations for different random seeds and parameter combinations. 
+
+The csv files that are created by this script are used to plot the results in the notebook [readModelResults.ipynb](../notebooks/readModelResults.ipynb). One example of such a csv is added [here](../data/WT/rearrangement/analysis/crosssections_interpolated_mean.csv).
