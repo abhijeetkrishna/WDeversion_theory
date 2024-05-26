@@ -1,0 +1,13 @@
+,stage,stage_name,prop,value,stage_init,stage_final,roi
+0,0,wL3 to 0hAPF,inDV_lambda_isotropic_coeffs,[-0.09848994  1.18401136],wL3,0hAPF,DV
+1,0,wL3 to 0hAPF,lambda_isotropic_coeffs,[-0.12406004  1.20789496],wL3,0hAPF,outDV
+2,1,wL3 to 2hAPF,inDV_lambda_isotropic_coeffs,[-0.11692544  1.2100754 ],wL3,2hAPF,DV
+3,1,wL3 to 2hAPF,lambda_isotropic_coeffs,[-0.29431527  1.4425603 ],wL3,2hAPF,outDV
+4,2,wL3 to 4hAPF,inDV_lambda_isotropic_coeffs,[-0.06151876  1.47472744],wL3,4hAPF,DV
+5,2,wL3 to 4hAPF,lambda_isotropic_coeffs,[-0.20050286  1.43479468],wL3,4hAPF,outDV
+6,0,wL3 to 0hAPF,inDV_lambda_anisotropic_coeffs,[-0.12904887  1.03128453],wL3,0hAPF,DV
+7,0,wL3 to 0hAPF,lambda_anisotropic_coeffs,[0.06172103 1.01053997],wL3,0hAPF,outDV
+8,1,wL3 to 2hAPF,inDV_lambda_anisotropic_coeffs,[-0.21271504  1.24178074],wL3,2hAPF,DV
+9,1,wL3 to 2hAPF,lambda_anisotropic_coeffs,[0.21823128 0.98874841],wL3,2hAPF,outDV
+10,2,wL3 to 4hAPF,inDV_lambda_anisotropic_coeffs,[-0.30567972  1.29370391],wL3,4hAPF,DV
+11,2,wL3 to 4hAPF,lambda_anisotropic_coeffs,[0.29444448 0.97652462],wL3,4hAPF,outDV
